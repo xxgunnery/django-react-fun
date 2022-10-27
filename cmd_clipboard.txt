@@ -1,0 +1,10 @@
+python -m venv app
+source app/Scripts/activate
+
+pip install --user pipenv
+pipenv install requests
+
+pip install virtualenv
+source app/Scripts/activate
+
+pip install virtualenvwrapper
