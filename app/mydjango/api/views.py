@@ -108,3 +108,49 @@ def change(request):
         json.dump(data, f)
 
     return HttpResponse("Data has been changed")
+
+
+def getUserData(request):
+    print('--------STARTING USER DATA----------')
+    version1 = request.GET.get('version1')
+    version2 = request.GET.get('version2')
+    user = request.GET.get('user')
+    
+    print("version", version1, version2)
+    print("user", user)
+    
+    with open('static/gamesessions.json') as f:
+        data = json.load(f)
+        
+    def checkUser(gamesession, user):
+        if gamesession.get('user') is not None:
+            if gamesession['user']['username'] == user:
+                return True
+            else:
+                return False
+        else:
+            return False
+    
+    def checkVersion(gamesession, version):
+        if gamesession.get('version') is not None:
+            if gamesession['version'] == version:
+                return True
+            else:
+                return False
+        else:
+            return False
+        
+    if all(data is not None for item in [user, version1, version2]):
+        print("Data is not none!")
+        data = list(filter(lambda x: checkUser(x,user) and (checkVersion(x, version1) or checkVersion(x, version2)) , data))
+        print("FILTERED DATA", len(data))
+    else:
+        print("NO VERSION OR USER")
+        return HttpResponse("NO VERSION OR USER")
+    
+    with open('static/gamesessions' + user + '.json', 'w') as f:
+        json.dump(data, f)
+
+    print("data loaded", len(data))
+
+    return HttpResponse("Data has been changed")
