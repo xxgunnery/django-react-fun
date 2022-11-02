@@ -21,12 +21,16 @@ export default function SkillStats() {
 
 
     React.useEffect(() => {
-        getData()
+        try {
+            getData()
+        } catch {
+            console.log("Error getting data")
+        }
+        
     }, [])
 
     async function getData() {
         try {
-            // tslint:disable-next-line:no-floating-promises
             const skillData = await axios.get<SkillData>("http://localhost:8000/api/getDoLLStats?version=1.1.4")
             setData(skillData.data)
         } catch (error) {
