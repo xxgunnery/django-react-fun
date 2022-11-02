@@ -1,9 +1,6 @@
-import type { NextPage } from "next"
-import Head from "next/head"
 import { Box, Button, Flex, Heading, SimpleGrid, VStack } from "@chakra-ui/react"
 import React from "react"
 import axios from "axios"
-import Waiting from "./Waiting"
 
 export default function SkillStats() {
 
@@ -28,8 +25,14 @@ export default function SkillStats() {
     }, [])
 
     async function getData() {
-        const skillData = await axios.get<SkillData>("http://localhost:8000/api/getDoLLStats?version=1.1.4")
-        setData(skillData.data)
+        try {
+            // tslint:disable-next-line:no-floating-promises
+            const skillData = await axios.get<SkillData>("http://localhost:8000/api/getDoLLStats?version=1.1.4")
+            setData(skillData.data)
+        } catch (error) {
+            console.error(error)
+        }
+  
     }
 
     async function getGameSessions() {
