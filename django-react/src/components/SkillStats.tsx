@@ -19,14 +19,13 @@ export default function SkillStats() {
         powerScore: number
     }
 
-
     React.useEffect(() => {
         try {
             getData()
         } catch {
             console.log("Error getting data")
         }
-        
+
     }, [])
 
     async function getData() {
@@ -36,7 +35,7 @@ export default function SkillStats() {
         } catch (error) {
             console.error(error)
         }
-  
+
     }
 
     async function getGameSessions() {
