@@ -109,7 +109,7 @@ def getSkillPowerScore(skillName):
     skillData = {
         "skillName": "Snail Shell",
         "dps": 1.1,
-        "healing" : {
+        "healing": {
             "hps": 0,
             "healType": "Lifesteal",
         },
@@ -125,31 +125,39 @@ def getSkillPowerScore(skillName):
         "statusEffects": [],
         "knockback": {
             "amount": 1.5,
-            "instancesPerSecond": 5 
+            "instancesPerSecond": 5
         },
         "scaleFactor": 2.0,
     }
     directionFactor = distanceFactors[skillData["control"]["direction"]]
-    damageFactor = skillData['dps'] * directionFactor * skillData["control"]['area']
-    healFactor = skillData['healing']['hps'] * getHealTypeFactor(skillData["healing"]['healType'], skillData['dps'])
+    damageFactor = skillData['dps'] * \
+        directionFactor * skillData["control"]['area']
+    healFactor = skillData['healing']['hps'] * \
+        getHealTypeFactor(skillData["healing"]['healType'], skillData['dps'])
     shieldFactor = skillData['sps']
     statusEffectFactor = getStatusEffectFactor(skillData['statusEffects'])
-    knockbackFactor = getKnockbackFactor(skillData['knockback'], skillData['control'] )
+    knockbackFactor = getKnockbackFactor(
+        skillData['knockback'], skillData['control'])
     extraFactor = 1*skillData['scaleFactor']*skillData['distanceAxie']
-    
-    skillScore = damageFactor + healFactor + shieldFactor + statusEffectFactor + knockbackFactor
+
+    skillScore = damageFactor + healFactor + \
+        shieldFactor + statusEffectFactor + knockbackFactor
     return skillScore
-    
+
+
 def getHealTypeFactor(healType, dps):
-    if(healType == "Lifesteal"):
+    if (healType == "Lifesteal"):
         return dps
-    
+
+
 def getStatusEffectFactor(statusEffects):
     return 0
+
 
 def getKnockbackFactor(knockback, control):
     directionFactor = {
         "Orbit": 3.0,
     }
-    knockbackFactor = knockback["amount"] * knockback["instancesPerSecond"] * control["area"] * directionFactor[control["direction"]]
+    knockbackFactor = knockback["amount"] * knockback["instancesPerSecond"] * \
+        control["area"] * directionFactor[control["direction"]]
     return knockbackFactor

@@ -35,7 +35,6 @@ export default function SkillStats() {
         } catch (error) {
             console.error(error)
         }
-
     }
 
     async function getGameSessions() {

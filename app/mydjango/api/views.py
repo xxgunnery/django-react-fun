@@ -4,6 +4,7 @@ from pathlib import Path
 import json
 from .functions.utils import getGameVersionInt
 from .functions.getDoLLStats import calculateStats
+import pandas
 
 # cd app/mydjango && python manage.py runserver
 # Create your views here.
@@ -43,6 +44,25 @@ def getDoLLStats(request):
     
     return HttpResponse(json.dumps(data))
 
+def getPlayerDistributions(request):
+    print("--------STARTING PLAYER DISTRIBUTIONS----------")
+    
+    version = request.GET.get('version')
+    
+    with open('static/gamesessions2.json') as f:
+        data = json.load(f)
+        
+    if version is not None:
+        data = list(filter(lambda x: x['version'] == version, data))
+        print("FILTERED DATA", len(data))      
+    
+    xpList = []
+    for gamesession in data:
+        xpList.append(gamesession['xpTotal'])
+        
+    pandaSeries = pandas.Series(xpList)
+    
+    
 
 def getGameVersions(request):
     print('--------STARTING DoLL Game Versions----------')

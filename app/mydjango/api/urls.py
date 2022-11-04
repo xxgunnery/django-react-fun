@@ -7,4 +7,5 @@ urlpatterns = [
   path("getGameSessionData", views.getGameSessionData),
   path("getUserData", views.getUserData),
   path("getDoLLStats", views.getDoLLStats),
+  path("getPlayerDistributions", views.getPlayerDistributions),
 ]
